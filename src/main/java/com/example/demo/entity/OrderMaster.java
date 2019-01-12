@@ -45,5 +45,5 @@ public class OrderMaster {
 
     /** 更新时间. */
     private Date updateTime;
-
+    
 }
