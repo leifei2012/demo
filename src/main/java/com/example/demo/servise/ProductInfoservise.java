@@ -1,9 +1,9 @@
 package com.example.demo.servise;
 
-import com.example.demo.DTO.DataImg;
-import com.example.demo.DTO.FoodImg;
-import com.example.demo.DTO.ProductList;
-import com.example.demo.dao.OrderMasterRepository;
+import com.example.demo.Util.Revo;
+import com.example.demo.VO.DataImg;
+import com.example.demo.VO.FoodImg;
+import com.example.demo.VO.VoUtil;
 import com.example.demo.dao.ProductCategoryRepository;
 import com.example.demo.dao.ProductInfoRepository;
 import com.example.demo.entity.ProductCategory;
@@ -22,7 +22,7 @@ public class ProductInfoservise {
     @Autowired
     ProductInfoRepository ProductInfo;
 
-    public ProductList list(){
+    public VoUtil list(){
         List<ProductCategory> all = ProductCategory.findAll();
         List<DataImg> data=new ArrayList<>();
         for(ProductCategory s:all){
@@ -43,11 +43,9 @@ public class ProductInfoservise {
             dataimg.setFood(foodimg);
             data.add(dataimg);
         }
-        ProductList ProductList=new ProductList();
-        ProductList.setCode(0);
-        ProductList.setMsg("成功");
-        ProductList.setData(data);
-        return ProductList;
+        Revo Revo=new Revo();
+        VoUtil re=Revo.success(data);
+        return re;
     }
 
 }

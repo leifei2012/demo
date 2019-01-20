@@ -1,23 +1,29 @@
 package com.example.demo.entity;
 
 import lombok.Data;
+import lombok.Value;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.annotation.processing.Generated;
+import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
 @Data
+@Table(name = "OrderDetail")
 public class OrderDetail {
 
     @Id
-    private String detailId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer Id;
+
+    private Integer detailId;
 
     /** 订单id. */
-    private String orderId;
+
+    private Integer orderId;
 
     /** 商品id. */
-    private String productId;
+    private Integer productId;
 
     /** 商品名称. */
     private String productName;
@@ -30,4 +36,5 @@ public class OrderDetail {
 
     /** 商品小图. */
     private String productIcon;
+
 }

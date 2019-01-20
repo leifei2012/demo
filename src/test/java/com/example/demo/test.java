@@ -2,22 +2,18 @@ package com.example.demo;
 
 public class test {
     String name;
-    int age;
+    static int num=0;
 
-    public test (){
-        this.age=21;
-    }
-    public test(String name,int age){
-        this();
-        this.name="Mick";
-    }
+
     private void print(){
-        System.out.println("最终名字="+this.name);
-        System.out.println("最终的年龄="+this.age);
+        System.out.println("最终的年龄="+num);
+        num++;
     }
     public static void main(String[] args) {
-        test tt=new test("",0); //随便传进去的参数
+        test tt=new test(); //随便传进去的参数
+        test tt1=new test();
         tt.print();
+        tt1.print();
 
     }
 }

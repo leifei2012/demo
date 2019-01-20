@@ -1,26 +1,17 @@
-package com.example.demo.entity;
+package com.example.demo.VO;
 
-
+import com.example.demo.entity.OrderDetail;
+import com.example.demo.entity.OrderStatusEnum;
+import com.example.demo.entity.PayStatusEnum;
 import lombok.Data;
-import org.hibernate.annotations.DynamicInsert;
-import org.hibernate.annotations.DynamicUpdate;
 
-import javax.persistence.*;
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
-
-@Entity
 @Data
-@DynamicInsert(true)   //如果某属性为空则不替换数据库中相应字段
-@Table(name="OrderMaster")
-public class OrderMaster implements Serializable {
+public class OrderList {
 
-    /** 订单id. */
-    @Id  //主键
-    @GeneratedValue(strategy= GenerationType.IDENTITY)    //主键自动生成
     private Integer orderId;
 
     /** 买家名字. */
@@ -50,4 +41,5 @@ public class OrderMaster implements Serializable {
     /** 更新时间. */
     private Date updateTime;
 
+    List<OrderDetail> orderDetailList;    //较OrderMaster增加
 }

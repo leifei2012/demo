@@ -15,7 +15,7 @@ import java.util.Date;
 public class ProductInfo {
 
     @Id
-    private String productId;
+    private Integer productId;
 
     /** 名字. */
     private String productName;

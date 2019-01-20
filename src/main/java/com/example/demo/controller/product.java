@@ -1,25 +1,31 @@
 package com.example.demo.controller;
 
 
-import org.springframework.stereotype.Controller;
+import com.example.demo.Util.Revo;
+import com.example.demo.VO.VoUtil;
+import com.example.demo.servise.ProductInfoservise;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.method.annotation.ModelAttributeMethodProcessor;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 @RestController
-@RequestMapping("/hello")
+@RequestMapping("/buyer")
 public class product {
 
-    @RequestMapping(value="/sayHello")
-    public String sayHello(){
-        return "hello";
+    @Autowired
+    ProductInfoservise ProductInfoservise;
+    @RequestMapping(value="/product/list")
+    public VoUtil list(){
+        VoUtil Vo=ProductInfoservise.list();
+        return Vo;
     }
-    @RequestMapping(value="/sayHi")
-    public String sayHi(){
-        return "hi";
+    @RequestMapping(value="/redirect")
+    public RedirectView sayHi(){
+        return new RedirectView("https://www.baidu.com"); //重定向
     }
     @RequestMapping(value="/sayHi1")
     public Object wrapResponse(@RequestParam("name") String name) {
