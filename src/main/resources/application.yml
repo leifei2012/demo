@@ -7,13 +7,13 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
-  mvc:
-    view:
-      prefix: /user/
-      suffix: .jsp
-server:
-  servlet:
-          context-path: /sell
+  freemarker:
+    template-loader-path: classpath:/       //这样写可以加载resources文件夹下所有文件,不然templates下的文件(.ftl)
+                                            //无法访问static文件夹下的文件(如css,js).
+    prefix: templates/                      //控制层返回时自动为返回对象加前缀
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
 
 
 

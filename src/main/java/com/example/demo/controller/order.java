@@ -39,7 +39,7 @@ public class order {
     }
     @RequestMapping(value="/delete")
     public VoUtil list(String openid,Integer orderId){
-        OrderMsterser.delete(openid,orderId);
+        OrderMsterser.delete(orderId);
         System.out.println("1111");
         Revo Revo=new Revo();
         return Revo.success(null);

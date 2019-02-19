@@ -1,13 +1,15 @@
 package com.example.demo.controller;
 
 
-import com.example.demo.Util.Revo;
 import com.example.demo.VO.VoUtil;
 import com.example.demo.servise.ProductInfoservise;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,7 +20,10 @@ public class product {
 
     @Autowired
     ProductInfoservise ProductInfoservise;
+    @Autowired
+    JedisPool RedisPool;
     @RequestMapping(value="/product/list")
+    @Cacheable(value = "list")
     public VoUtil list(){
         VoUtil Vo=ProductInfoservise.list();
         return Vo;
@@ -32,6 +37,16 @@ public class product {
         Map<String, Object> result = new HashMap<>();
         result.put("1212", name);
         return result;
+    }
+
+    @RequestMapping(value = "/set")
+    @ResponseBody
+    public String set(String k,String v){
+        System.out.println(k+v);
+        Jedis redis=RedisPool.getResource();
+        redis.set(k,v);
+        redis.close();
+        return k+v;
     }
 }
 

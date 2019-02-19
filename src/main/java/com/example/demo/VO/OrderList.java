@@ -5,12 +5,13 @@ import com.example.demo.entity.OrderStatusEnum;
 import com.example.demo.entity.PayStatusEnum;
 import lombok.Data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
 @Data
-public class OrderList {
+public class OrderList implements Serializable {
 
     private Integer orderId;
 

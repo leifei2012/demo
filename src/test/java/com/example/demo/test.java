@@ -1,5 +1,8 @@
 package com.example.demo;
 
+
+import org.aspectj.lang.annotation.Aspect;
+
 public class test {
     String name;
     static int num=0;
@@ -10,10 +13,6 @@ public class test {
         num++;
     }
     public static void main(String[] args) {
-        test tt=new test(); //随便传进去的参数
-        test tt1=new test();
-        tt.print();
-        tt1.print();
-
+        System.out.println("222");
     }
 }
