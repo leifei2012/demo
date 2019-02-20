@@ -3,6 +3,7 @@ package com.example.demo.servise;
 import com.example.demo.dao.UserMapper;
 import com.example.demo.dao.UserRepository;
 import com.example.demo.entity.UserInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -11,6 +12,7 @@ import org.springframework.util.StringUtils;
 import java.util.Date;
 
 @Service
+@Slf4j
 public class UserService {
 
     @Autowired
@@ -36,21 +38,18 @@ public class UserService {
         return "";
     }
 
-    public UserInfo login(UserInfo user) {
+    public UserInfo login(String name, String pwd) {
         //验证
-        if (null == user || StringUtils.isEmpty(user.getName()) || StringUtils.isEmpty(user.getPassword())) {
+        if (StringUtils.isEmpty(name) || StringUtils.isEmpty(pwd)) {
             return null;
         }
-
 //        UserInfo dbUser = userDAO.findByName(user.getName());
-        UserInfo dbUser = UserMapper.selectByName(user.getName());
+        UserInfo dbUser = UserMapper.selectByName(name);
         if (null == dbUser) {
             return null;
         }
-
         //用户输入的密码
-        String password = DigestUtils.md5DigestAsHex(user.getPassword().getBytes()).toUpperCase();
-
+        String password = DigestUtils.md5DigestAsHex(pwd.getBytes()).toUpperCase();
         //校验密码
         if (!password.equals(dbUser.getPassword())) {
             return null;

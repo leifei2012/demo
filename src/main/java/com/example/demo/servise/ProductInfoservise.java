@@ -31,7 +31,7 @@ public class ProductInfoservise {
         return ProductInfo.findAll(pageable);
     }
 
-    public VoUtil list(){
+    public List<DataImg> list(){
         List<ProductCategory> all = ProductCategory.findAll();
         List<DataImg> data=new ArrayList<>();
         for(ProductCategory s:all){
@@ -52,9 +52,9 @@ public class ProductInfoservise {
             dataimg.setFood(foodimg);
             data.add(dataimg);
         }
-        Revo Revo=new Revo();
-        VoUtil re=Revo.success(data);
-        return re;
+//        Revo Revo=new Revo();
+//        VoUtil re=Revo.success(data);
+        return data;
     }
     public ProductInfo offSale(Integer productId) {
         ProductInfo productInfo = ProductInfo.findByProductId(productId);

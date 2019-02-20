@@ -31,7 +31,6 @@ public class SellerProduct {
         map.put("productInfoPage", productInfoPage);
         map.put("currentPage", page);
         map.put("size", size);
-        System.out.println("111");
         return new ModelAndView("product/list", map);
     }
 

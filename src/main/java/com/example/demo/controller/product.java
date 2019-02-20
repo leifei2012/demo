@@ -22,12 +22,12 @@ public class product {
     ProductInfoservise ProductInfoservise;
     @Autowired
     JedisPool RedisPool;
-    @RequestMapping(value="/product/list")
-    @Cacheable(value = "list")
-    public VoUtil list(){
-        VoUtil Vo=ProductInfoservise.list();
-        return Vo;
-    }
+//    @RequestMapping(value="/product/list")
+//    @Cacheable(value = "list")
+//    public VoUtil list(){
+//        VoUtil Vo=ProductInfoservise.list();
+//        return Vo;
+//    }
     @RequestMapping(value="/redirect")
     public RedirectView sayHi(){
         return new RedirectView("https://www.baidu.com"); //重定向

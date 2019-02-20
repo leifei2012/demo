@@ -2,8 +2,11 @@ package com.example.demo.controller;
 
 
 import com.example.demo.Util.IpAddr;
+import com.example.demo.VO.DataImg;
+import com.example.demo.VO.FoodImg;
 import com.example.demo.WebSocket.WebSocket;
 import com.example.demo.entity.UserInfo;
+import com.example.demo.servise.ProductInfoservise;
 import com.example.demo.servise.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +20,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/buyer")
@@ -26,14 +32,18 @@ public class User {
     UserService UserService;
     @Autowired
     WebSocket WebSocket;
-
+    @Autowired
+    ProductInfoservise ProductInfoservise;
+    //(配置文件中 classpath:/)这样写可以加载resources文件夹下所有文件,不然templates下的文件(.ftl)
+    //无法访问static文件夹下的文件(如css,js).
+    //(templates/)控制层返回时自动为返回对象加前缀.
     @RequestMapping(value = "/register", method = RequestMethod.GET)
     public String register() {
         return "user/register";
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView register(HttpServletResponse response, String name, String password1, String password2) {
+    public ModelAndView register(HttpServletResponse response, String name, String pwd, String cpwd) {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("register2");
         String error1 = null;
@@ -44,14 +54,14 @@ public class User {
         } else {
             mv.addObject("name", name);
         }
-        if (password1 == null) {
+        if (pwd == null) {
             mv.addObject("password1", "密码不能为空");
             error1 = "1";
         }
         mv.addObject("same", "");
         mv.addObject("namesame", "");
         mv.addObject("register", "注册失败");
-        if (!password1.equals(password2)) {
+        if (!pwd.equals(cpwd)) {
             mv.addObject("same", "两次密码不一致");
             error2 = "1";
         }
@@ -60,7 +70,7 @@ public class User {
         }
         UserInfo user = new UserInfo();
         user.setName(name);
-        user.setPassword(password1);
+        user.setPassword(pwd);
         String namesame = UserService.register(user);
         mv.addObject("namesame", namesame);
         if (namesame.equals("用户名相同")) {
@@ -70,15 +80,17 @@ public class User {
         Cookie Cookie = new Cookie("username", name);
         log.info(Cookie.getValue());
         response.addCookie(Cookie);
-        UserService.login(user);
+        UserService.login(name,pwd);
         return mv;
     }
 
-    @RequestMapping(value = "/login")
-    public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
-        log.info("index");
+    @RequestMapping(value = "/prelogin", method = RequestMethod.GET)
+    public String prelogin() {
+        return "user/login";
+    }
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    public ModelAndView login(HttpServletRequest request, HttpServletResponse response, String username,String pwd ) {
         ModelAndView mv = new ModelAndView();
-        mv.setViewName("indexq");
         Cookie[] cookies = request.getCookies();
         String name = "";
         for (Cookie cookie : cookies) {
@@ -86,6 +98,11 @@ public class User {
                 name = cookie.getValue();
             }
         }
+        if(null == UserService.login(username,pwd)){
+            mv.setViewName("indexerror");
+            return mv;
+        }
+        mv.setViewName("indexq");
         Cookie Cookie = new Cookie("loginstatus", "1");
         response.addCookie(Cookie);
         mv.addObject("name", "欢迎" + name);
@@ -102,16 +119,30 @@ public class User {
         }
         return "已登出";
     }
-
     @RequestMapping(value = "/index")
-    public String index(HttpServletRequest request, String name) {
+    public ModelAndView index(HttpServletRequest request,  Map<String, Object> map) {
         IpAddr IpAddr = new IpAddr();
         String ip = IpAddr.getIpAddr(request);
         log.info(ip);   //真实地址
         log.info(request.getRemoteAddr());   //127.0.0.1
         log.info(request.getHeader("Proxy-Client-IP"));   //null
         WebSocket.sendMessage("新连接");
-        return "index";
+        List<DataImg> dataImgs= ProductInfoservise.list();
+        List<DataImg> newdataImgs = new ArrayList<>();
+        for(DataImg DataImg:dataImgs){
+            DataImg newDataImg=new DataImg();
+            List<FoodImg> newfood=new ArrayList<>();
+            List<FoodImg> food=DataImg.getFood();
+            for(int i=0;i<4&i<food.size();i++){                 //每类商品最多取4个
+                newfood.add(food.get(i));
+            }
+            newDataImg.setName(DataImg.getName());
+            newDataImg.setType(DataImg.getType());
+            newDataImg.setFood(newfood);
+            newdataImgs.add(newDataImg);
+        }
+        map.put("newdataImgs", newdataImgs);
+        return new ModelAndView("product/index", map);
     }
 
     @RequestMapping(value = "/test1")

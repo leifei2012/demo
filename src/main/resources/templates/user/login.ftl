@@ -2,11 +2,10 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8" />
-	<title>注册</title>
-	<link rel="stylesheet" href="../static/libs/particles/css/style.css">
-	<link rel="stylesheet" href="../static/libs/sweetalert2/sweetalert2.min.css">
-	<link rel="stylesheet" href="../static/css/base.css">
-	<link rel="stylesheet" href="../static/css/login.css">
+	<title>登陆</title>
+	<link rel="stylesheet" href="../../static/libs/particles/css/style.css">
+	<link rel="stylesheet" href="../../static/css/base.css">
+	<link rel="stylesheet" href="../../static/css/login.css" />
 </head>
 <body>
 	<!-- particles.js container -->
@@ -17,25 +16,35 @@
 			<h2>与世界分享你的知识、经验和见解</h2>
 		</div>
 		<nav class="switch_nav">
-			<a href="javascript:;" id="switch_signup" class="switch_btn on">注册</a>
-			<a href="login.html" id="switch_login" class="switch_btn">登陆</a>
+			<a href="register.html" id="switch_signup" class="switch_btn">注册</a>
+			<a href="javascript:;" id="switch_login" class="switch_btn on">登陆</a>
 			<div class="switch_bottom" id="switch_bottom"></div>
 		</nav>
-		<form method="post" action="">
-			<ul class="group_input">
-				<li>
-					<input type="text" placeholder="姓名" class="name required" id="name" />
-				</li>
-				<li>
-					<input type="text" placeholder="手机号(仅支持中国大陆)" class="mobile required" id="mobile" />
-				</li>
-				<li>
-					<input type="password" placeholder="密码(不少于6位)" class="psd required" id="psd" />
-				</li>
-			</ul>
-			<button type="submit" class="submit_btn" id="btnSubmit" onclick="sendSubmit()">注册知乎</button>
-			<span class="agreement-tip">点击「注册」按钮，即代表你同意<a href="javascript:;">《知乎协议》</a></span>
-		</form>
+		<div id="login">
+			<form method="post" action="login">
+				<ul class="group_input">
+					<li>
+						<input type="text" name="username" id="mobile" placeholder="用户名" />
+					</li>
+					<li>
+						<input type="password" name="pwd" id="psd" placeholder="密码" />
+					</li>
+				</ul>
+				<button type="submit" class="submit_btn" id="btnSubmit">登陆</button>
+			</form>
+			<div class="states">
+				<span class="left"><a href="javascript:;">手机验证码登陆</a></span>
+				<span class="right"><a href="javascript:;">无法登陆？</a></span>
+			</div>
+			<div class="states">
+				<a href="javascript:;" class="social_account">社交账号登陆</a>
+				<div class="states three_MinIcon">
+					<a href="javascript:;" class="MinIcon_weixin"><img src="../../static/img/icon_weixin.jpg" style="width:20px;height:18px" /></a>
+					<a href="javascript:;" class="MinIcon_weibo"><img src="../../static/img/icon_weibo.jpg" style="width:20px;height:18px" /></a>
+					<a href="javascript:;" class="MinIcon_qq"><img src="../../static/img/icon_qq.jpg" style="width:20px;height:18px" /></a>
+				</div>
+			</div>
+		</div>
 		<div class="QRcode_btn">
 			<div type="submit" class="submit_btn download_btn">下载知乎App</div>
 			<div class="QRcode">
@@ -44,15 +53,12 @@
 			</div>
 
 		</div>
-  
-	
 		<div id="footer">
 			<span>&copy;2017知乎</span><span>·</span><a href="javascript:;">知乎圆桌</a><span>·</span><a href="javascript:;">发现</a><span>·</span><a href="javascript:;">移动应用</a><span>·</span><a href="javascript:;">使用机构账号登录</a><span>·</span><a href="javascript:;">联系我们</a><span>·</span><a href="javascript:;">工作来知乎</a><br />
 			<span>·</span><a href="javascript:;">京ICP证110745号</a><span>·</span><span>京公网安备11010802010035号</span><span>·</span><a href="javascript:;">出版物经营许可证</a>
 		</div>
 	</div>
 	<script src="../../static/libs/jquery-1.12.4/jquery.min.js"></script>
-	<script src="../../static/libs/sweetalert2/sweetalert2.min.js"></script>
 	<script src="../../static/libs/particles/particles.min.js"></script>
 	<script src="../../static/libs/particles/js/app.js"></script>
 	<!-- <script src="../../static/libs/particles/js/lib/stats.js"></script> -->
@@ -74,7 +80,7 @@
 			requestAnimationFrame(update);
 		};
 		requestAnimationFrame(update);
-	</script>	
+	</script>
 	<script>
 		$(".download_btn").click(function(){
 			if($(".QRcode").css("display")=="none"){
@@ -99,25 +105,12 @@
 		//为表单元素添加失去焦点事件
 		$("form :input").blur(function(){
 			var $parent = $(this).parent();
-			$parent.find(".msg").remove(); //删除以前的提醒元素（find()：查找匹配元素集中元素的所有匹配元素）
-			//验证姓名
-			if($(this).is("#name")){
-				var nameVal = $.trim(this.value);
-				var regName = /[~#^$@%&!*()<>:;'"{}【】  ]/;
-				if(nameVal == "" || nameVal.length < 2 || regName.test(nameVal)){
-					var errorMsg = " 姓名非空，长度2-20位，不包含特殊字符！";
-					$parent.append("<span class='msg onError'>" + errorMsg + "</span>");
-				} else{
-					var okMsg=" 输入正确";
-                    $parent.append("<span class='msg onSuccess'>" + okMsg + "</span>");
-				}
-			}			
+			$parent.find(".msg").remove(); //删除以前的提醒元素（find()：查找匹配元素集中元素的所有匹配元素）		
 			//验证手机号
 			if($(this).is("#mobile")){
 				var mobileVal = $.trim(this.value);
-				var regMobile = /^1[3|4|5|7|8][0-9]{9}$/;
-				if(mobileVal == "" || !regMobile.test(mobileVal)){
-					var errorMsg = " 请输入有效的11位手机号码！";
+				if(mobileVal == ""){
+					var errorMsg = " 请输入账号";
 					$parent.append("<span class='msg onError'>" + errorMsg + "</span>");
 				} else{
 					var okMsg=" 输入正确";
@@ -152,7 +145,7 @@
     		if(numError){
     			return false;
     		}
-    		alert('注册成功！')
+    		alert('登陆成功！')
 
     	});
 		})
