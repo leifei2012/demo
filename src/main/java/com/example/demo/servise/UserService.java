@@ -1,9 +1,13 @@
 package com.example.demo.servise;
 
+import com.example.demo.DTO.OrderDTO;
+import com.example.demo.VO.UserinfoVo;
 import com.example.demo.dao.UserMapper;
 import com.example.demo.dao.UserRepository;
+import com.example.demo.entity.SellerInfo;
 import com.example.demo.entity.UserInfo;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
@@ -59,14 +63,32 @@ public class UserService {
     }
     public Boolean islogin(String name,String status) {   //不存在或过期返回false
         UserInfo UserInfo = userDAO.findByName(name);
+        System.out.println(UserInfo);
+        log.info(status);
         if(status.equals("1")){
             if(UserInfo!=null){
                 Date now = new Date();
                 long time = 600*1000;//10分钟  ,超过则需重新登陆
-                Date afterDate = new Date(UserInfo.getLoginTime().getTime() + time);//60秒后的时间
+                Date afterDate = new Date(UserInfo.getLoginTime().getTime() + time);
+                log.info("11");
                 return afterDate.compareTo(now)>0;
             }
         }
         return false;
+    }
+
+    public UserinfoVo info(String username){
+        UserinfoVo UserinfoVo = new UserinfoVo();
+        UserInfo UserInfo=userDAO.findByName(username);
+        if(UserInfo!=null){
+            BeanUtils.copyProperties(UserInfo, UserinfoVo);
+        }
+        return UserinfoVo;
+    }
+    public void infochange(String username,String phone,String address){
+        UserInfo UserInfo=userDAO.findByName(username);
+        UserInfo.setPhone(phone);
+        UserInfo.setAddress(address);
+        userDAO.save(UserInfo);
     }
 }

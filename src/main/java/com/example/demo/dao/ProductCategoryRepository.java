@@ -9,4 +9,6 @@ import java.util.List;
 public interface ProductCategoryRepository extends JpaRepository<ProductCategory, String> {
 
     List<ProductCategory> findByCategoryTypeIn(List<Integer> categoryTypeList);
+    ProductCategory findByCategoryId(Integer categoryId);
+//    ProductCategory save(ProductCategory ProductCategory);
 }

@@ -1,6 +1,7 @@
 package com.example.demo.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.DynamicInsert;
 
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import java.util.Date;
 
 @Entity // 实体
 @Data
+@DynamicInsert(true)
 public class UserInfo{
 
     @Id // 主键
@@ -27,6 +29,10 @@ public class UserInfo{
     @Size(max = 100)
     @Column(length = 100)
     private String password; // 登录时密码
+
+    private String phone;
+
+    private String address;
 
     private Date loginTime;
 

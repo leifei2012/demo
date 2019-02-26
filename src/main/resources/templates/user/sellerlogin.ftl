@@ -5,7 +5,7 @@
 	<title>登陆</title>
 	<link rel="stylesheet" href="../../static/libs/particles/css/style.css">
 	<link rel="stylesheet" href="../../static/css/base.css">
-	<link rel="stylesheet" href="../../static/css/login.css" />
+	<link rel="stylesheet" href="../../static/css/sellerlogin.css" />
 </head>
 <body>
 	<!-- particles.js container -->
@@ -17,12 +17,12 @@
 		</div>
 		<nav class="switch_nav">
 			<a href="register" id="switch_signup" class="switch_btn">注册</a>
-			<a href="javascript:;" id="switch_login" class="switch_btn on">用户登陆</a>
-			<a href="sellerprelogin" id="switch_sellerlogin" class="switch_btn in">卖家登陆</a>
+			<a href="prelogin" id="switch_login" class="switch_btn on">用户登陆</a>
+			<a href="javascript:;" id="switch_sellerlogin" class="switch_btn in">卖家登陆</a>
 			<div class="switch_bottom" id="switch_bottom"></div>
 		</nav>
 		<div id="login">
-			<form method="post" action="/buyer/login">
+			<form method="post" action="/buyer/sellerlogin">
 				<ul class="group_input">
 					<li>
 						<input type="text" name="username" id="mobile" placeholder="用户名" />

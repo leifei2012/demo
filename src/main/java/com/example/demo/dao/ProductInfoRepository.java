@@ -10,5 +10,6 @@ public interface ProductInfoRepository extends JpaRepository<ProductInfo, String
 
     List<ProductInfo> findByProductStatus(Integer productStatus);
     List<ProductInfo> findBycategoryType(Integer categoryType);
-    ProductInfo findByProductId(Integer ProductId);
+    ProductInfo findByProductId(Integer categoryId);
+
 }

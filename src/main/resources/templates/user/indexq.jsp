@@ -9,10 +9,10 @@
 <body>
 
         ${name}<br/>
-        <form action="index" method="get">
+        <form action="/buyer/index" method="get">
             <input type="submit" value="去首页" />
         </form>
-        <form action="index" method="get">
+        <form action="/buyer/logout" method="get">
             <input type="submit" value="退出登录" />
         </form>
 </body>

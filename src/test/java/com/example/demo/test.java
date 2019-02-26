@@ -2,6 +2,7 @@ package com.example.demo;
 
 
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.util.DigestUtils;
 
 public class test {
     String name;
@@ -13,6 +14,6 @@ public class test {
         num++;
     }
     public static void main(String[] args) {
-        System.out.println("222");
+        System.out.println(DigestUtils.md5DigestAsHex("1qaz".getBytes()).toUpperCase());
     }
 }

@@ -14,9 +14,9 @@ import javax.persistence.Id;
 public class SellerInfo {
 
     @Id
-    private String sellerId;
+    private String Id;
 
-    private String username;
+    private String name;
 
     private String password;
 

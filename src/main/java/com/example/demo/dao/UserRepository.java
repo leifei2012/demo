@@ -29,4 +29,5 @@ public interface UserRepository extends JpaRepository<UserInfo,String>{
 	@Query(value = "update UserInfo u set u.loginTime=?2 where u.id=?1")
 	void updataById(Integer id, Date LoginTime);
 
+
 }

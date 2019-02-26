@@ -23,22 +23,40 @@ import java.util.List;
 public class ProductInfoservise {
 
     @Autowired
-    ProductCategoryRepository ProductCategory;
+    ProductCategoryRepository ProductCategoryRepository;
     @Autowired
-    ProductInfoRepository ProductInfo;
+    ProductInfoRepository ProductInfoRepository;
 
     public Page<ProductInfo> findAll(Pageable pageable) {
-        return ProductInfo.findAll(pageable);
+        return ProductInfoRepository.findAll(pageable);
+    }
+    public List<ProductCategory> findAll() {
+        return ProductCategoryRepository.findAll();
+    }
+
+    public  ProductCategory findOne(Integer id){
+        return  ProductCategoryRepository.findByCategoryId(id);
+    }
+    public  ProductInfo findByProductId(Integer id){
+        return  ProductInfoRepository.findByProductId(id);
+    }
+
+    public ProductCategory save(ProductCategory ProductCategory){
+        return ProductCategoryRepository.save(ProductCategory);
+    }
+
+    public ProductInfo save(ProductInfo ProductInfo){
+        return ProductInfoRepository.save(ProductInfo);
     }
 
     public List<DataImg> list(){
-        List<ProductCategory> all = ProductCategory.findAll();
+        List<ProductCategory> all = ProductCategoryRepository.findAll();
         List<DataImg> data=new ArrayList<>();
         for(ProductCategory s:all){
             DataImg dataimg=new DataImg();
             dataimg.setName(s.getCategoryName());
             dataimg.setType(s.getCategoryType());
-            List<ProductInfo> foods=ProductInfo.findBycategoryType(s.getCategoryType());
+            List<ProductInfo> foods=ProductInfoRepository.findBycategoryType(s.getCategoryType());
             List<FoodImg> foodimg=new ArrayList<>();
             for(ProductInfo i:foods){
                 FoodImg food=new FoodImg();
@@ -57,7 +75,7 @@ public class ProductInfoservise {
         return data;
     }
     public ProductInfo offSale(Integer productId) {
-        ProductInfo productInfo = ProductInfo.findByProductId(productId);
+        ProductInfo productInfo = ProductInfoRepository.findByProductId(productId);
         if (productInfo == null) {
             throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
         }
@@ -66,10 +84,10 @@ public class ProductInfoservise {
         }
         //更新
         productInfo.setProductStatus(ProductStatusEnum.DOWN.getCode());
-        return ProductInfo.save(productInfo);
+        return ProductInfoRepository.save(productInfo);
     }
     public ProductInfo onSale(Integer productId) {
-        ProductInfo productInfo = ProductInfo.findByProductId(productId);
+        ProductInfo productInfo = ProductInfoRepository.findByProductId(productId);
         if (productInfo == null) {
             throw new SellException(ResultEnum.PRODUCT_NOT_EXIST);
         }
@@ -79,6 +97,6 @@ public class ProductInfoservise {
 
         //更新
         productInfo.setProductStatus(ProductStatusEnum.UP.getCode());
-        return ProductInfo.save(productInfo);
+        return ProductInfoRepository.save(productInfo);
     }
 }

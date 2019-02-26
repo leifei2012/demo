@@ -14,11 +14,12 @@
 	<div id="wrapper">
 		<div>
 			<img src="../../static/img/zhihu_logo.png" />
-			<h2>与世界分享你的知识、经验和见解</h2>
+			<h2>欢迎来到本人的网站</h2>
 		</div>
 		<nav class="switch_nav">
 			<a href="javascript:;" id="switch_signup" class="switch_btn on">注册</a>
-			<a href="prelogin" id="switch_login" class="switch_btn">登陆</a>
+			<a href="prelogin" id="switch_login" class="switch_btn">用户登陆</a>
+			<a href="sellerprelogin" id="switch_sellerlogin" class="switch_btn in">卖家登陆</a>
 			<div class="switch_bottom" id="switch_bottom"></div>
 		</nav>
 		<form method="post" action="register">
