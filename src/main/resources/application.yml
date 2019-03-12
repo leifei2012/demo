@@ -9,12 +9,19 @@ spring:
     port: 6379
   resources:
     static-locations: classpath:/static
-
   mvc:
-    static-path-pattern: /static/**
+    static-path-pattern: /static/**    #不然无法访问css,js等文件
     view:
       prefix: /user/
       suffix: .jsp
+
+
+wechat:
+  mpAppId: wx6b58fb9ac5b1753b
+  mpAppSecret: 02d7dd941e80521501d8165c357a4e34
+  openAppId:  o_aHe50P-HASV-VPVbHgZfcYHgU8
+  templateId: DPHJ8Uk_nJ7OgObqICuiiIPgqWrniKGiSGsE9O4W1uA
+  Url: http://www.baidu.com
 
 mybatis:
   mapper-locations: classpath:mapper/*.xml

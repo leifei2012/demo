@@ -5,7 +5,7 @@ import com.example.demo.Util.IpAddr;
 import com.example.demo.VO.DataImg;
 import com.example.demo.VO.FoodImg;
 import com.example.demo.VO.UserinfoVo;
-import com.example.demo.WebSocket.WebSocket;
+//import com.example.demo.WebSocket.WebSocket;
 import com.example.demo.entity.UserInfo;
 import com.example.demo.servise.ProductInfoservise;
 import com.example.demo.servise.SellerService;
@@ -34,8 +34,8 @@ import java.util.Map;
 public class User {
     @Autowired
     UserService UserService;
-    @Autowired
-    WebSocket WebSocket;
+//    @Autowired
+//    WebSocket WebSocket;
     @Autowired
     ProductInfoservise ProductInfoservise;
     @Autowired
@@ -138,7 +138,7 @@ public class User {
 //        log.info(ip);   //真实地址
 //        log.info(request.getRemoteAddr());   //127.0.0.1
 //        log.info(request.getHeader("Proxy-Client-IP"));   //null
-        WebSocket.sendMessage("新连接");
+//        WebSocket.sendMessage("新连接");
         List<DataImg> dataImgs= ProductInfoservise.list();
         List<DataImg> newdataImgs = new ArrayList<>();
         for(DataImg DataImg:dataImgs){
