@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.demo.dao.LogMapper">
+    <resultMap type="com.example.demo.entity.LogInfo" id="ResultMap">
+        <id column="id" property="id"/>
+        <result column="classname" property="classname"/>
+        <result column="methodname" property="methodname"/>
+        <result column="ip" property="ip"/>
+        <result column="requestname" property="requestname"/>
+        <result column="alltime" property="alltime"/>
+        <result column="date" property="date"/>
+        <result column="exceptions" property="exceptions"/>
+    </resultMap>
+    <insert id="insertLog"  parameterType="com.example.demo.entity.LogInfo">
+            insert into log_info (id,classname, methodname,ip,requestname,alltime,date,exceptions)
+            values (#{id},#{classname}, #{methodname},#{ip},#{requestname},#{alltime},#{date},#{exceptions})
+    </insert>
+
+
+
+
+</mapper>

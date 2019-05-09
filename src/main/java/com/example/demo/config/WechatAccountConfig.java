@@ -11,7 +11,7 @@ import java.util.Map;
 
 @Data
 @Component
-@ConfigurationProperties(prefix = "wechat")
+@ConfigurationProperties(prefix = "wechat")  //配置文件中配置导入到类中
 @PropertySource({"classpath:application.yml"})
 public class WechatAccountConfig {
 

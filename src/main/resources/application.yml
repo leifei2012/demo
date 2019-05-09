@@ -1,9 +1,16 @@
 spring:
-  datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: 1qaz
-    url: jdbc:mysql://localhost:3306/sell?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+  datasource:    #采用多数据源设置
+    sell:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 1qaz
+      url: jdbc:mysql://localhost:3306/sell?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false #不使用"jdbc-url"会报错
+    slave:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      username: root
+      password: 1qaz
+      url: jdbc:mysql://localhost:3306/test?characterEncoding=utf-8&serverTimezone=GMT%2B8&useSSL=false
+
   redis:
     host: 127.0.0.1
     port: 6379
@@ -11,6 +18,7 @@ spring:
     static-locations: classpath:/static
   mvc:
     static-path-pattern: /static/**    #不然无法访问css,js等文件
+
     view:
       prefix: /user/
       suffix: .jsp

@@ -32,7 +32,7 @@ public class SellerOrder {
      * @param size 一页有多少条数据
      */
     @GetMapping("/list")
-    public ModelAndView list(@RequestParam(value = "page", defaultValue = "1") Integer page,
+    public ModelAndView list  (@RequestParam(value = "page", defaultValue = "1") Integer page,
                              @RequestParam(value = "size", defaultValue = "10") Integer size,
                              Map<String, Object> map) {
         PageRequest request = PageRequest.of(page - 1, size);
@@ -40,7 +40,12 @@ public class SellerOrder {
         map.put("orderDTOPage", orderDTOPage);
         map.put("currentPage", page);
         map.put("size", size);
-//        orderDTOPage.getTotalPages()
+//        int i=5;
+//
+//        int[] b = new int[2];
+//        System.out.println(b[i]);
+
+
         return new ModelAndView("order/list", map);
     }
 
