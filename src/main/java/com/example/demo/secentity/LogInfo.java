@@ -1,9 +1,9 @@
 //package com.example.demo.secentity;
 //
-//import com.fasterxml.jackson.annotation.JsonFormat;
+//import com.fasterxml.jackson.annotations.JsonFormat;
 //import lombok.Data;
 //import org.hibernate.annotations.DynamicInsert;
-//import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.format.annotations.DateTimeFormat;
 //
 //import javax.persistence.Entity;
 //import javax.persistence.GeneratedValue;

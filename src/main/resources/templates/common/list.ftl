@@ -13,6 +13,13 @@
             <div class="row clearfix">
                 <div class="col-md-12 column">
                     <table class="table table-bordered table-condensed">
+                        <div class="container-fluid" style="padding-top:5px;margin-bottom:15px;margin-left:20px;font-weight:bold;letter-spacing:2px;">
+                            <form action="/api/log/detail" method="get">
+                                访问时间：<input type="date" name="date" value="${.now?date}"/>
+                                <input type="submit" value="查询" class="test" style="border-radius: 6px;padding-left: 10px;padding-right: 10px;margin-left: 40px;">
+                            </form>
+
+                        </div>
                         <thead>
                         <tr>
                             <th>id</th>
@@ -36,7 +43,12 @@
                             <td>${LogInfo.requestname}</td>
                             <td>${LogInfo.alltime}</td>
                             <td>${LogInfo.date}</td>
-                            <td>${LogInfo.exceptions}</td>
+                            <td>
+                            <#if LogInfo.exceptions??>
+                                ${LogInfo.exceptions}
+                            <#else>无
+                            </#if>
+                            </td>
                         </tr>
                         </#list>
                         </tbody>
@@ -49,21 +61,21 @@
                     <#if currentPage lte 1>
                         <li class="disabled"><a href="#">上一页</a></li>
                     <#else>
-                        <li><a href="/seller/order/list?page=${currentPage - 1}&size=${size}">上一页</a></li>
+                        <li><a href="/api/log/detail?date=${date}&page=${currentPage - 1}&size=${size}">上一页</a></li>
                     </#if>
 
                     <#list 1..orderDTOPage.getTotalPages() as index>
                         <#if currentPage == index>
                             <li class="disabled"><a href="#">${index}</a></li>
                         <#else>
-                            <li><a href="/seller/order/list?page=${index}&size=${size}">${index}</a></li>
+                            <li><a href="/api/log/detail?<#if RequestParameters["date"]??>date=${RequestParameters["date"]}&</#if>page=${index}&size=${size}">${index}</a></li>
                         </#if>
                     </#list>
 
                     <#if currentPage gte orderDTOPage.getTotalPages()>
                         <li class="disabled"><a href="#">下一页</a></li>
                     <#else>
-                        <li><a href="/seller/order/list?page=${currentPage + 1}&size=${size}">下一页</a></li>
+                        <li><a href="/api/log/detail?<#if RequestParameters["date"]??>date=${RequestParameters["date"]}&</#if>page=${currentPage + 1}&size=${size}">下一页</a></li>
                     </#if>
                     </ul>
                 </div>
@@ -101,39 +113,7 @@
 
 <script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
 <script src="https://cdn.bootcss.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-<script>
-    var websocket = null;
-    if('WebSocket' in window) {
-        websocket = new WebSocket('ws://sell.natapp4.cc/sell/webSocket');
-    }else {
-        alert('该浏览器不支持websocket!');
-    }
 
-    websocket.onopen = function (event) {
-        console.log('建立连接');
-    }
-
-    websocket.onclose = function (event) {
-        console.log('连接关闭');
-    }
-
-    websocket.onmessage = function (event) {
-        console.log('收到消息:' + event.data)
-        //弹窗提醒, 播放音乐
-        $('#myModal').modal('show');
-
-        document.getElementById('notice').play();
-    }
-
-    websocket.onerror = function () {
-        alert('websocket通信发生错误！');
-    }
-
-    window.onbeforeunload = function () {
-        websocket.close();
-    }
-
-</script>
 
 </body>
 </html>

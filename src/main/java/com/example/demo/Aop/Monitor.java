@@ -60,7 +60,9 @@ public class Monitor {
         String alltime = String.valueOf(end - start);
         loginfo.setAlltime(alltime);
         loginfo.setDate(new Date());
-        LogMapper.insertLog(loginfo);
+        if(loginfo.getExceptions()!=null){
+            LogMapper.insertLog(loginfo);
+        }
         return name;
     }
 }
