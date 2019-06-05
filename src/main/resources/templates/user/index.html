@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="//unpkg.com/vue/dist/vue.js"></script>
+    <script src="//unpkg.com/element-ui@2.9.1/lib/index.js"></script>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <link rel="stylesheet" type="text/css" href="//unpkg.com/element-ui@2.9.1/lib/theme-chalk/index.css" />
+</head>
+<body>
+<div id="app">
+    <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
+            <el-date-picker
+                    v-model="ruleForm.value1"
+                    type="date"
+                    placeholder="选择日期">
+            </el-date-picker>
+            <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+    </el-form>
+</div>
+</body>
+<script>
+    var Main = {
+        data() {
+            return {
+                ruleForm:{value1: ''}
+            };
+        },
+
+    methods: {
+        submitForm(formName) {
+            this.$refs[formName].validate((valid) => {
+                if (valid) {
+                    $.ajax({
+                        type:'get',
+                        url:'http://www.baidu.com?id=1',
+                        data:this.ruleForm.value1,
+                        dataType:'json',
+                    });
+                    console.log(this.ruleForm.value1);
+                } else {
+                    console.log('error submit!!');
+                    return false;
+                }
+            });
+        },
+    }};
+    var Ctor = Vue.extend(Main)
+    new Ctor().$mount('#app')
+</script>
+</html>
